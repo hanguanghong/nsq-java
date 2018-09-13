@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import ly.bit.nsq.exceptions.NSQException;
 import ly.bit.nsq.lookupd.AbstractLookupd;
@@ -57,7 +57,7 @@ public abstract class NSQReader {
 		
 		this.connClass = BasicConnection.class; // TODO can be passed by caller
 		this.lookupdConnections = new ConcurrentHashMap<String, AbstractLookupd>();
-        this.lookupdScheduler = Executors.newScheduledThreadPool(1);
+		this.lookupdScheduler = Executors.newScheduledThreadPool(1);
 
 		// register action for shutdown
 		Runtime.getRuntime().addShutdownHook(new Thread(){
@@ -142,7 +142,7 @@ public abstract class NSQReader {
 		if (stored != null){
 			return;
 		}
-        lookupdScheduler.scheduleAtFixedRate(new BasicLookupdJob(addr, this), 30, 30, SECONDS);
+		lookupdScheduler.scheduleAtFixedRate(new BasicLookupdJob(addr, this), 10, 10, MILLISECONDS);
 	}
 
 	public String toString(){

@@ -30,7 +30,7 @@ import java.util.concurrent.FutureTask;
 public class NSQProducer {
 	private static final Logger log = LoggerFactory.getLogger(NSQProducer.class);
 
-	private static final String PUT_URL = "/put?topic=";
+	private static final String PUT_URL = "/pub?topic=";
 	private static final int DEFAULT_SOCKET_TIMEOUT = 2000;
 	private static final int DEFAULT_CONNECTION_TIMEOUT = 2000;
 

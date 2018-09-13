@@ -33,7 +33,7 @@ public abstract class AbstractLookupd {
 		List<String> outputs = new ArrayList<String>();
 		try {	 
 			 JsonNode rootNode = mapper.readTree(response);
-			 JsonNode producers = rootNode.path("data").path("producers");
+			 JsonNode producers = rootNode.path("producers");
 			 Iterator<JsonNode> prodItr = producers.getElements();
 			 while(prodItr.hasNext()){
 				 JsonNode producer = prodItr.next();
