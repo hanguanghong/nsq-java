@@ -28,7 +28,7 @@ import java.util.concurrent.FutureTask;
 
 
 public class NSQProducer {
-	private static final Logger log = LoggerFactory.getLogger(NSQProducer.class);
+	//private static final Logger log = LoggerFactory.getLogger(NSQProducer.class);
 
 	private static final String PUT_URL = "/pub?topic=";
 	private static final int DEFAULT_SOCKET_TIMEOUT = 2000;
@@ -51,13 +51,14 @@ public class NSQProducer {
 		this.topic = topic;
 		this.url = url + PUT_URL + topic;
 
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
-		schemeRegistry.register(
-				new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
+		//SchemeRegistry schemeRegistry = new SchemeRegistry();
+		//schemeRegistry.register(
+		//		new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
 
-		ClientConnectionManager cm = new PoolingClientConnectionManager(schemeRegistry);
+		//ClientConnectionManager cm = new PoolingClientConnectionManager(schemeRegistry);
 
-		this.httpclient = new DefaultHttpClient(cm);
+		//this.httpclient = new DefaultHttpClient(cm);
+		this.httpclient = new DefaultHttpClient();
 		this.setSocketTimeout(DEFAULT_SOCKET_TIMEOUT);
 		this.setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
 		// see https://code.google.com/p/crawler4j/issues/detail?id=136: potentially works around a jvm crash at
@@ -127,11 +128,11 @@ public class NSQProducer {
 				NSQProducer.this.put(message);
 			} catch (NSQException e) {
 				// Log the error here since caller probably won't ever check the future.
-				log.error("Error posting NSQ message:", e);
+				//log.error("Error posting NSQ message:", e);
 				throw e;
 			} catch (Exception e) {
 				// Log the error here since caller probably won't ever check the future.
-				log.error("Error posting NSQ message:", e);
+				//log.error("Error posting NSQ message:", e);
 				throw new NSQException(e);
 			}
 			return null;
