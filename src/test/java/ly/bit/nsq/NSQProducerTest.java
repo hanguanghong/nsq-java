@@ -34,7 +34,7 @@ public class NSQProducerTest {
 		mockClient = mock(HttpClient.class);
 		producer = new NSQProducer(topic);
 		producer.httpclient = mockClient;
-		assertEquals("http://127.0.0.1:4151/put?topic=" + topic, producer.getUrl());
+		assertEquals("http://127.0.0.1:4151/pub?topic=" + topic, producer.getUrl());
 	}
 
 	@After

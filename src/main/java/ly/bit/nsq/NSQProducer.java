@@ -13,7 +13,7 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+//import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -63,7 +63,7 @@ public class NSQProducer {
 		this.setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
 		// see https://code.google.com/p/crawler4j/issues/detail?id=136: potentially works around a jvm crash at
 		// org.apache.http.impl.cookie.BestMatchSpec.formatCookies(Ljava/util/List;)Ljava/util/List
-		this.httpclient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.IGNORE_COOKIES);
+		//this.httpclient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.IGNORE_COOKIES);
 
 		// register action for shutdown
 		Runtime.getRuntime().addShutdownHook(new Thread(){
@@ -89,7 +89,7 @@ public class NSQProducer {
 				throw new NSQException("POST to " + url + " returned HTTP " + response.getStatusLine().getStatusCode());
 			}
 			if (response.getEntity() != null) {
-				EntityUtils.consume(response.getEntity());
+				response.getEntity().consumeContent();
 			}
 		} catch (UnsupportedEncodingException e) {
 			throw new NSQException(e);
@@ -99,7 +99,7 @@ public class NSQProducer {
 			throw new NSQException(e);
 		} finally {
 			if (post != null) {
-				post.releaseConnection();
+				post.abort();
 			}
 		}
 	}
